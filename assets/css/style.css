@@ -1,0 +1,109 @@
+/* General Reset */
+body, h1, form, input, button, textarea {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Sticky Header */
+.sticky-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* App Name */
+.app-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 10px;
+}
+
+.tabs button {
+    padding: 10px 15px;
+    background-color: #555;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tabs button:hover {
+    background-color: #777;
+}
+
+.tabs button.active {
+    background-color: #007BFF;
+}
+
+/* Icon */
+.icon {
+    font-size: 1.5rem;
+}
+
+/* Main Content */
+main {
+    padding: 20px;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+}
+
+form label {
+    font-weight: bold;
+}
+
+form input, form textarea, form button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form button {
+    background-color: #007BFF;
+    color: #fff;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Search */
+#search {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Grouped View */
+#grouped-view {
+    margin-top: 20px;
+}

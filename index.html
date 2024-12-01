@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judo App</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header class="sticky-header">
+        <div class="app-name">Judo App</div>
+        <nav class="tabs">
+            <button data-tab="registration">Registration</button>
+            <button data-tab="weigh-in">Weigh-In</button>
+            <button data-tab="tab3">Tab 3</button>
+            <button data-tab="tab4">Tab 4</button>
+            <button data-tab="tab5">Tab 5</button>
+        </nav>
+        <div class="icon">⚙️</div>
+    </header>
+    <main>
+        <section id="registration" class="tab-content">
+            <h1>Registration</h1>
+            <form id="registration-form">
+                <label for="first-name">First Name:</label><input type="text" id="first-name" required>
+                <label for="last-name">Last Name:</label><input type="text" id="last-name" required>
+                <label for="age">Age:</label><input type="number" id="age" required>
+                <label for="rank">Rank:</label><input type="text" id="rank" required>
+                <label for="branch">Branch:</label><input type="text" id="branch">
+                <label for="trainer-name">Trainer Name:</label><input type="text" id="trainer-name">
+                <label for="weight">Weight (kg):</label><input type="number" id="weight" required>
+                <label for="payment">Payment:</label><input type="text" id="payment">
+                <label for="comments">Comments:</label><textarea id="comments"></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+        <section id="weigh-in" class="tab-content hidden">
+            <h1>Weigh-In</h1>
+            <input type="text" id="search" placeholder="Search..." />
+            <div id="search-results"></div>
+            <div id="grouped-view"></div>
+        </section>
+        <!-- Placeholder sections for other tabs -->
+        <section id="tab3" class="tab-content hidden"><h1>Tab 3 Content</h1></section>
+        <section id="tab4" class="tab-content hidden"><h1>Tab 4 Content</h1></section>
+        <section id="tab5" class="tab-content hidden"><h1>Tab 5 Content</h1></section>
+    </main>
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

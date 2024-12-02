@@ -1,84 +1,59 @@
-// In-Memory Data Storage
-const dataStore = [];
-const defaultAgeRanges = ["2010-2011", "2012-2013"];
-const defaultWeightRanges = [50, 55, 60, 65];
+// script.js
 
-// Tab Switching Logic
-document.querySelectorAll(".tabs button").forEach(button => {
-    button.addEventListener("click", () => {
-        document.querySelectorAll(".tabs button").forEach(btn => btn.classList.remove("active"));
-        document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
+document.addEventListener("DOMContentLoaded", () => {
+    const tabs = document.querySelectorAll(".tabs button");
+    const tabContents = document.querySelectorAll(".tab-content");
 
-        button.classList.add("active");
-        document.getElementById(button.dataset.tab).classList.add("active");
+    // Tab switching logic
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            tabs.forEach(t => t.classList.remove("active"));
+            tabContents.forEach(content => content.classList.remove("active"));
+
+            tab.classList.add("active");
+            document.getElementById(tab.dataset.tab).classList.add("active");
+        });
     });
-});
 
-// Form Submission Logic
-document.getElementById("registration-form").addEventListener("submit", event => {
-    event.preventDefault();
+    // In-memory data storage
+    let data = [];
 
-    const formData = {
-        firstName: document.getElementById("first-name").value,
-        lastName: document.getElementById("last-name").value,
-        age: parseInt(document.getElementById("age").value, 10),
-        rank: document.getElementById("rank").value,
-        branch: document.getElementById("branch").value,
-        trainerName: document.getElementById("trainer-name").value,
-        weight: parseFloat(document.getElementById("weight").value),
-        payment: document.getElementById("payment").value,
-        comments: document.getElementById("comments").value
+    // Example default ranges (can be configured)
+    const ageRanges = [{ min: 2010, max: 2011 }, { min: 2012, max: 2013 }];
+    const weightRanges = [{ min: 50, max: 54.99 }, { min: 55, max: 59.99 }];
+
+    // Function to add data (simulating form submission)
+    const addData = (entry) => {
+        data.push(entry);
+        renderGroups();
     };
 
-    dataStore.push(formData);
-    alert("Registration submitted!");
-    event.target.reset();
+    // Function to group and render data
+    const renderGroups = () => {
+        const groupedData = {};
+
+        data.forEach(entry => {
+            const ageGroup = ageRanges.find(r => entry.age >= r.min && entry.age <= r.max);
+            const weightGroup = weightRanges.find(r => entry.weight >= r.min && entry.weight <= r.max);
+
+            if (ageGroup && weightGroup) {
+                const groupKey = `${ageGroup.min}-${ageGroup.max} | ${weightGroup.min}-${weightGroup.max}`;
+                if (!groupedData[groupKey]) groupedData[groupKey] = [];
+                groupedData[groupKey].push(entry);
+            }
+        });
+
+        // Render grouped data
+        const weighInContent = document.getElementById("weigh-in");
+        weighInContent.innerHTML = "<h3>Grouped Data</h3>";
+        Object.keys(groupedData).forEach(group => {
+            const groupEl = document.createElement("div");
+            groupEl.innerHTML = `<strong>${group}</strong><ul>${groupedData[group].map(e => `<li>${e.firstName} ${e.lastName}</li>`).join("")}</ul>`;
+            weighInContent.appendChild(groupEl);
+        });
+    };
+
+    // Mock form submission (to be replaced with form handling)
+    addData({ firstName: "John", lastName: "Doe", age: 2011, weight: 52 });
+    addData({ firstName: "Jane", lastName: "Smith", age: 2010, weight: 58 });
 });
-
-// Dynamic Search and Grouped View
-document.getElementById("search").addEventListener("input", event => {
-    const searchQuery = event.target.value.toLowerCase();
-    const results = dataStore.filter(item =>
-        item.firstName.toLowerCase().includes(searchQuery) ||
-        item.lastName.toLowerCase().includes(searchQuery) ||
-        item.rank.toLowerCase().includes(searchQuery)
-    );
-    renderSearchResults(results);
-});
-
-function renderSearchResults(results) {
-    const resultsContainer = document.getElementById("search-results");
-    resultsContainer.innerHTML = results.length
-        ? results.map(item => `<div>${item.firstName} ${item.lastName} - ${item.rank}</div>`).join("")
-        : "<p>No results found.</p>";
-}
-
-function renderGroupedView() {
-    const groupedContainer = document.getElementById("grouped-view");
-    groupedContainer.innerHTML = "";
-
-    const ageGroups = groupBy(dataStore, "age", defaultAgeRanges);
-    for (const [ageRange, group] of Object.entries(ageGroups)) {
-        const weightGroups = groupBy(group, "weight", defaultWeightRanges);
-        groupedContainer.innerHTML += `<h3>Age Group: ${ageRange}</h3>`;
-        for (const [weightRange, weightGroup] of Object.entries(weightGroups)) {
-            groupedContainer.innerHTML += `<p>Weight Group: ${weightRange}kg</p>`;
-            groupedContainer.innerHTML += `<ul>${weightGroup.map(item => `<li>${item.firstName} ${item.lastName}</li>`).join("")}</ul>`;
-        }
-    }
-}
-
-function groupBy(data, key, ranges) {
-    const groups = {};
-    for (const item of data) {
-        const value = item[key];
-        const range = ranges.find((_, i) => value >= ranges[i] && value < (ranges[i + 1] || Infinity));
-        const rangeLabel = range ? `${range}-${ranges[ranges.indexOf(range) + 1] - 0.01}` : "Other";
-        if (!groups[rangeLabel]) groups[rangeLabel] = [];
-        groups[rangeLabel].push(item);
-    }
-    return groups;
-}
-
-// Update Grouped View whenever new data is added
-setInterval(renderGroupedView, 1000);

@@ -1,9 +1,36 @@
 // In-memory data storage
 const data = [];
 
-// Example default ranges (can be configured)
-const ageRanges = [{ min: 2010, max: 2011 }, { min: 2012, max: 2013 }];
-const weightRanges = [{ min: 50, max: 54.99 }, { min: 55, max: 59.99 }];
+// Define default age and weight ranges for settings
+let settingsRanges = [
+    { ageMin: 2010, ageMax: 2011, weightMin: 50, weightMax: 54.99, gender: "Male" },
+    { ageMin: 2011, ageMax: 2012, weightMin: 55, weightMax: 59.99, gender: "Male" },
+];
+
+
+// Render settings for age and weight ranges
+const renderSettingsList = () => {
+    const settingsList = document.getElementById("settings-list");
+    settingsList.innerHTML = "";
+
+    settingsRanges.forEach((range, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+            Birth Year: ${range.ageMin}-${range.ageMax}, 
+            Weight (KG): ${range.weightMin}-${range.weightMax}, 
+            Gender: ${range.gender}
+            <button class="delete-btn" data-index="${index}">Delete</button>`;
+        li.querySelector(".delete-btn").addEventListener("click", () => {
+            removeSetting(index);
+        });
+        settingsList.appendChild(li);
+    });
+};
+
+const removeSetting = (index) => {
+    settingsRanges.splice(index, 1);
+    renderSettingsList();
+};
 
 /**
  * Function to add data entry
@@ -36,8 +63,7 @@ const renderUserList = () => {
 
         // Add delete functionality
         li.querySelector(".delete-btn").addEventListener("click", () => {
-            data.splice(index, 1); // Remove from memory
-            renderUserList(); // Re-render the list
+            deleteUser(index);
         });
 
         userList.appendChild(li);
@@ -51,19 +77,20 @@ const renderGroups = () => {
     const groupedData = {};
 
     data.forEach(entry => {
-        const ageGroup = ageRanges.find(r => entry.age >= r.min && entry.age <= r.max);
-        const weightGroup = weightRanges.find(r => entry.weight >= r.min && entry.weight <= r.max);
+        const group = settingsRanges.find(
+            r => entry.age >= r.ageMin && entry.age <= r.ageMax &&
+                entry.weight >= r.weightMin && entry.weight <= r.weightMax &&
+                entry.gender === r.gender
+        );
 
-        if (ageGroup && weightGroup) {
-            const groupKey = `${ageGroup.min}-${ageGroup.max} | ${weightGroup.min}-${weightGroup.max}`;
+        if (group) {
+            const groupKey = `${group.ageMin}-${group.ageMax} | ${group.weightMin}-${group.weightMax} | ${group.gender}`;
             if (!groupedData[groupKey]) groupedData[groupKey] = [];
             groupedData[groupKey].push(entry);
         }
     });
 
-    // Render grouped data in the "Weigh-In" tab
     const weighInContent = document.getElementById("weigh-in");
-    weighInContent.innerHTML = ""; // Clear the content first
     weighInContent.innerHTML = "<h3>Grouped Data</h3>";
     Object.keys(groupedData).forEach(group => {
         const groupEl = document.createElement("div");
@@ -76,6 +103,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const tabs = document.querySelectorAll(".tabs button");
     const tabContents = document.querySelectorAll(".tab-content");
     const registrationForm = document.getElementById("registration-form");
+    const settingsForm = document.getElementById("settings-form");
+    const settingsList = document.getElementById("settings-list");
 
     // Tab switching logic
     tabs.forEach(tab => {
@@ -96,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const entry = {
             firstName: document.getElementById("first-name").value.trim(),
             lastName: document.getElementById("last-name").value.trim(),
-            age: parseFloat(document.getElementById("age").value.trim(), 10),
+            age: parseFloat(document.getElementById("age").value.trim()),
             grade: document.getElementById("grade").value.trim(),
             rank: document.getElementById("rank").value.trim(),
             branch: document.getElementById("branch").value.trim(),
@@ -115,4 +144,21 @@ document.addEventListener("DOMContentLoaded", () => {
         addData(entry); // Add the data to the list
         registrationForm.reset(); // Clear the form after submission
     });
+
+    settingsForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const newAgeFrom = parseInt(document.getElementById("new-age-from").value);
+        const newAgeTo = parseInt(document.getElementById("new-age-to").value);
+        const newWeightFrom = parseFloat(document.getElementById("new-weight-from").value);
+        const newWeightTo = parseFloat(document.getElementById("new-weight-to").value);
+        const newGender = document.getElementById("new-gender").value; // Dropdown or radio
+
+        if (newAgeFrom && newAgeTo && newWeightFrom && newWeightTo && newGender) {
+            settingsRanges.push({ ageMin: newAgeFrom, ageMax: newAgeTo, weightMin: newWeightFrom, weightMax: newWeightTo, gender: newGender });
+        }
+        renderSettingsList();
+        settingsForm.reset();
+    });
 });
+

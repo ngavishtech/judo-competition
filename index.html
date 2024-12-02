@@ -15,6 +15,7 @@
             <button data-tab="tab3">Tab 3</button>
             <button data-tab="tab4">Tab 4</button>
             <button data-tab="tab5">Tab 5</button>
+            <button data-tab="settings">⚙️</button>
         </nav>
         <div class="icon">⚙️</div>
     </header>
@@ -24,16 +25,16 @@
             <div class="registration-container">
                 <!-- Registration Form -->
                 <form id="registration-form" class="registration-form">
-                    <label for="first-name">First Name:</label><input type="text" id="first-name" required>
-                    <label for="last-name">Last Name:</label><input type="text" id="last-name" required>
-                    <label for="age">Age:</label><input type="number" step="0.5" id="age" required>
-                    <label for="grade">Grade:</label><input type="text" id="grade" required>
-                    <label for="rank">Rank:</label><input type="text" id="rank" required>
-                    <label for="branch">Branch:</label><input type="text" id="branch" required>
-                    <label for="trainer-name">Trainer Name:</label><input type="text" id="trainer-name" required>
-                    <label for="weight">Weight (kg):</label><input type="number" step="0.01" id="weight" required>
-                    <label for="payment">Payment:</label><input type="text" id="payment" required>
-                    <label for="comments">Comments:</label><textarea id="comments"></textarea>
+                    <label for="first-name">First Name</label><input type="text" id="first-name" required>
+                    <label for="last-name">Last Name</label><input type="text" id="last-name" required>
+                    <label for="age">Birth Year</label><input type="number" step="0.5" id="age" required>
+                    <label for="grade">Grade/Class</label><input type="text" id="grade" required>
+                    <label for="rank">Rank/Belt</label><input type="text" id="rank" >
+                    <label for="branch">Branch/City</label><input type="text" id="branch" required>
+                    <label for="trainer-name">Coach Name</label><input type="text" id="trainer-name" required>
+                    <label for="weight">Weight (KG)</label><input type="number" step="0.01" id="weight" required>
+                    <label for="payment">Payment Details</label><input type="text" id="payment">
+                    <label for="comments">Comments</label><textarea id="comments"></textarea>
                     <button type="submit">Submit</button>
                 </form>
         
@@ -50,10 +51,33 @@
             <div id="search-results"></div>
             <div id="grouped-view"></div>
         </section>
-        <!-- Placeholder sections for other tabs -->
         <section id="tab3" class="tab-content hidden"><h1>Tab 3 Content</h1></section>
         <section id="tab4" class="tab-content hidden"><h1>Tab 4 Content</h1></section>
         <section id="tab5" class="tab-content hidden"><h1>Tab 5 Content</h1></section>
+        <section id="settings" class="tab-content hidden">
+            <h1>Settings</h1>
+            <div class="registration-container">
+                <form id="settings-form" class="registration-form">
+                    <select id="new-gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                    <label for="new-age-from">From Birth Year</label><input type="number" id="new-age-from" required>
+                    <label for="new-age-to">To Birth Year</label><input type="number" id="new-age-to" required>
+
+                    <label for="new-weight-from">From Weight (KG)</label><input type="number" step="0.01" id="new-weight-from" required>
+                    <label for="new-weight-to">To Weight (KG)</label><input type="number" step="0.01" id="new-weight-to" required>
+
+                    <button type="submit">Submit</button>
+                </form>
+
+                <div id="current-ranges-container">
+                    <h3>Current Ranges</h3>
+                    <ul id="settings-list"></ul>
+                </div>
+            </div>
+        </section>
     </main>
     <script src="assets/js/script.js"></script>
 </body>

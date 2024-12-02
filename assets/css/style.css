@@ -46,6 +46,8 @@ body, h1, form, input, button, textarea {
 
 .tabs button.active {
     background-color: #007BFF;
+    font-weight: bold;
+    border-bottom: 2px solid #000;
 }
 
 /* Icon */
@@ -108,61 +110,16 @@ form button:hover {
     margin-top: 20px;
 }
 
-/* User list container */
-#user-list-container {
+/* User List Container */
+#user-list-container,
+#current-ranges-container {
+    flex: 2; /* Take up more space */
+    max-width: 60%;
     margin-top: 20px;
-    max-height: 150px; /* Set max height for inner scroll */
-    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 400px;
+    overflow-y: auto;
     border: 1px solid #ccc;
     padding: 10px;
-    border-radius: 5px;
-}
-
-/* User list items */
-#user-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 10px;
-    border-bottom: 1px solid #eee;
-}
-
-#user-list li:hover {
-    background-color: #f9f9f9;
-}
-
-/* Delete button (hidden by default) */
-.delete-btn {
-    display: none;
-    cursor: pointer;
-    color: red;
-    border: none;
-    background: none;
-}
-
-/* Show Delete button on hover */
-#user-list li:hover .delete-btn {
-    display: inline;
-}
-
-/* Layout for Registration Tab */
-.registration-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 20px;
-}
-
-.registration-form {
-    flex: 1; /* Take up available space */
-    max-width: 60%; /* Limit width for form */
-}
-
-#user-list-container {
-    flex: 1; /* Equal width as form */
-    max-width: 35%; /* Limit width for users */
-    padding: 10px;
-    border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
 }
@@ -172,7 +129,7 @@ form button:hover {
     list-style: none;
     padding: 0;
     margin: 0;
-    max-height: 400px; /* Scrollable container */
+    max-height: 400px;
     overflow-y: auto;
 }
 
@@ -188,15 +145,77 @@ form button:hover {
     background-color: #f1f1f1;
 }
 
-/* Delete Button */
+#settings-list li:hover {
+    background-color: #f1f1f1;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* Delete Button (Hidden by Default) */
 .delete-btn {
     display: none;
     cursor: pointer;
     color: red;
-    background: none;
     border: none;
+    background: none;
 }
 
 #user-list li:hover .delete-btn {
+    display: inline;
+}
+
+/* Layout for Registration Tab */
+.registration-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.registration-form {
+    flex: 1;
+    max-width: 60%;
+}
+
+#settings-list {
+    list-style: none; /* Removes bullet points */
+    padding: 0;       /* Removes default padding */
+    margin: 0;        /* Removes default margin */
+}
+
+/* User List Container */
+#settings-list container,
+#current-ranges-container {
+    flex: 2; /* Take up more space */
+    max-width: 60%;
+    margin-top: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* settings-list Styling */
+#settings-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#settings-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#settings-list li:hover .delete-btn {
     display: inline;
 }

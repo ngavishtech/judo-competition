@@ -95,7 +95,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const entry = {
             firstName: document.getElementById("first-name").value.trim(),
             lastName: document.getElementById("last-name").value.trim(),
-            age: parseInt(document.getElementById("age").value.trim(), 10),
+            age: parseFloat(document.getElementById("age").value.trim(), 10),
+            grade: document.getElementById("grade").value.trim(),
             rank: document.getElementById("rank").value.trim(),
             branch: document.getElementById("branch").value.trim(),
             trainerName: document.getElementById("trainer-name").value.trim(),

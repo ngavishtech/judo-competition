@@ -21,18 +21,27 @@
     <main>
         <section id="registration" class="tab-content">
             <h1>Registration</h1>
-            <form id="registration-form">
-                <label for="first-name">First Name:</label><input type="text" id="first-name" required>
-                <label for="last-name">Last Name:</label><input type="text" id="last-name" required>
-                <label for="age">Age:</label><input type="number" id="age" required>
-                <label for="rank">Rank:</label><input type="text" id="rank" required>
-                <label for="branch">Branch:</label><input type="text" id="branch">
-                <label for="trainer-name">Trainer Name:</label><input type="text" id="trainer-name">
-                <label for="weight">Weight (kg):</label><input type="number" id="weight" required>
-                <label for="payment">Payment:</label><input type="text" id="payment">
-                <label for="comments">Comments:</label><textarea id="comments"></textarea>
-                <button type="submit">Submit</button>
-            </form>
+            <div class="registration-container">
+                <!-- Registration Form -->
+                <form id="registration-form" class="registration-form">
+                    <label for="first-name">First Name:</label><input type="text" id="first-name" required>
+                    <label for="last-name">Last Name:</label><input type="text" id="last-name" required>
+                    <label for="age">Age:</label><input type="number" id="age" required>
+                    <label for="rank">Rank:</label><input type="text" id="rank" required>
+                    <label for="branch">Branch:</label><input type="text" id="branch">
+                    <label for="trainer-name">Trainer Name:</label><input type="text" id="trainer-name">
+                    <label for="weight">Weight (kg):</label><input type="number" id="weight" required>
+                    <label for="payment">Payment:</label><input type="text" id="payment">
+                    <label for="comments">Comments:</label><textarea id="comments"></textarea>
+                    <button type="submit">Submit</button>
+                </form>
+        
+                <!-- Submitted Users Section -->
+                <div id="user-list-container">
+                    <h3>Submitted Users</h3>
+                    <ul id="user-list"></ul>
+                </div>
+            </div>
         </section>
         <section id="weigh-in" class="tab-content hidden">
             <h1>Weigh-In</h1>

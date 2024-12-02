@@ -64,6 +64,14 @@ const renderGroups = (athletesList) => {
     const groupedData = {};
 
     athletesList.forEach(entry => {
+        if (!entry.weight || isNaN(entry.weight)) {
+            if (!groupedData["TO BE WEIGHTED"]) {
+                groupedData["TO BE WEIGHTED"] = [];
+            }
+            groupedData["TO BE WEIGHTED"].push(entry);
+            return;
+        }
+
         const group = settingsRanges.find(
             r => entry.age >= r.ageMin && entry.age <= r.ageMax &&
                 entry.weight >= r.weightMin && entry.weight <= r.weightMax &&

@@ -144,3 +144,59 @@ form button:hover {
 #user-list li:hover .delete-btn {
     display: inline;
 }
+
+/* Layout for Registration Tab */
+.registration-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.registration-form {
+    flex: 1; /* Take up available space */
+    max-width: 60%; /* Limit width for form */
+}
+
+#user-list-container {
+    flex: 1; /* Equal width as form */
+    max-width: 35%; /* Limit width for users */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* User List Styling */
+#user-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 400px; /* Scrollable container */
+    overflow-y: auto;
+}
+
+#user-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#user-list li:hover {
+    background-color: #f1f1f1;
+}
+
+/* Delete Button */
+.delete-btn {
+    display: none;
+    cursor: pointer;
+    color: red;
+    background: none;
+    border: none;
+}
+
+#user-list li:hover .delete-btn {
+    display: inline;
+}

@@ -63,6 +63,7 @@ const renderGroups = () => {
 
     // Render grouped data in the "Weigh-In" tab
     const weighInContent = document.getElementById("weigh-in");
+    weighInContent.innerHTML = ""; // Clear the content first
     weighInContent.innerHTML = "<h3>Grouped Data</h3>";
     Object.keys(groupedData).forEach(group => {
         const groupEl = document.createElement("div");

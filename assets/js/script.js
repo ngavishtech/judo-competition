@@ -1,14 +1,11 @@
 // In-memory data storage
-const data = [];
-
-// Define default age and weight ranges for settings
+let athletes = [];
 let settingsRanges = [
     { ageMin: 2010, ageMax: 2011, weightMin: 50, weightMax: 54.99, gender: "Male" },
-    { ageMin: 2011, ageMax: 2012, weightMin: 55, weightMax: 59.99, gender: "Male" },
+    { ageMin: 2010, ageMax: 2011, weightMin: 55, weightMax: 59.99, gender: "Male" },
+    { ageMin: 2012, ageMax: 2013, weightMin: 55, weightMax: 59.99, gender: "Male" },
 ];
 
-
-// Render settings for age and weight ranges
 const renderSettingsList = () => {
     const settingsList = document.getElementById("settings-list");
     settingsList.innerHTML = "";
@@ -32,51 +29,41 @@ const removeSetting = (index) => {
     renderSettingsList();
 };
 
-/**
- * Function to add data entry
- * @param {Object} entry - The new data entry to add
- */
 const addData = (entry) => {
-    data.push(entry);
-    renderGroups();
-    renderUserList();
+    athletes.push(entry);
+    renderGroups(athletes);
+    renderUserList(athletes);
 };
 
-// Function to delete a user
 const deleteUser = (index) => {
-    data.splice(index, 1); // Remove the user from the array
-    renderGroups(); // Re-render groups after deletion
-    renderUserList(); // Re-render the user list
+    athletes.splice(index, 1); // Remove the user from the array
+    renderGroups(athletes); // Re-render groups after deletion
+    renderUserList(athletes); // Re-render the user list
 };
 
-// Function to render the user list
-const renderUserList = () => {
-    const userList = document.getElementById("user-list");
-    userList.innerHTML = ""; // Clear the list first
+const renderUserList = (athletesList) => {
+    const athleteList = document.getElementById("user-list");
+    athleteList.innerHTML = "";
 
-    data.forEach((entry, index) => {
+    athletesList.forEach((entry, index) => {
         const li = document.createElement("li");
         li.innerHTML = `
-            ${entry.firstName} ${entry.lastName} - Age: ${entry.age}, Weight: ${entry.weight} kg
+            ${entry.firstName} ${entry.lastName} (${entry.gender}) - Birth Year: ${entry.age}, Weight: ${entry.weight} KG
             <button class="delete-btn" data-index="${index}">Delete</button>
         `;
 
-        // Add delete functionality
         li.querySelector(".delete-btn").addEventListener("click", () => {
             deleteUser(index);
         });
 
-        userList.appendChild(li);
+        athleteList.appendChild(li);
     });
 };
 
-/**
- * Function to group and render data
- */
-const renderGroups = () => {
+const renderGroups = (athletesList) => {
     const groupedData = {};
 
-    data.forEach(entry => {
+    athletesList.forEach(entry => {
         const group = settingsRanges.find(
             r => entry.age >= r.ageMin && entry.age <= r.ageMax &&
                 entry.weight >= r.weightMin && entry.weight <= r.weightMax &&
@@ -84,19 +71,38 @@ const renderGroups = () => {
         );
 
         if (group) {
-            const groupKey = `${group.ageMin}-${group.ageMax} | ${group.weightMin}-${group.weightMax} | ${group.gender}`;
+            const groupKey = `${group.gender} | Birth Year (${group.ageMin}-${group.ageMax}) | Weight (${group.weightMin}-${group.weightMax} KG)`;
             if (!groupedData[groupKey]) groupedData[groupKey] = [];
             groupedData[groupKey].push(entry);
         }
     });
 
-    const weighInContent = document.getElementById("weigh-in");
-    weighInContent.innerHTML = "<h3>Grouped Data</h3>";
+    const weighInContent = document.getElementById("grouped-view");
+    weighInContent.innerHTML = "";
     Object.keys(groupedData).forEach(group => {
         const groupEl = document.createElement("div");
-        groupEl.innerHTML = `<strong>${group}</strong><ul>${groupedData[group].map(e => `<li>${e.firstName} ${e.lastName}</li>`).join("")}</ul>`;
+        groupEl.innerHTML = `<strong>${group}</strong><ul>${groupedData[group].map(e => `<li>${e.firstName} ${e.lastName} (${e.age}, ${e.weight}, ${e.rank})</li>`).join("")}</ul>`;
         weighInContent.appendChild(groupEl);
     });
+};
+
+const filterAthletes = (searchTerm) => {
+    const filteredAthletes = athletes.filter(athlete =>
+        athlete.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        athlete.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        athlete.gender.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        athlete.age === parseInt(searchTerm) ||
+        athlete.grade.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        athlete.rank.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        athlete.branch.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        athlete.coachName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        athlete.weight === parseFloat(searchTerm) ||
+        athlete.payment === searchTerm ||
+        athlete.comments.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    renderUserList(filteredAthletes)
+    renderGroups(filteredAthletes)
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -105,6 +111,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const registrationForm = document.getElementById("registration-form");
     const settingsForm = document.getElementById("settings-form");
     const settingsList = document.getElementById("settings-list");
+    const refreshWeighIn = document.getElementById("weigh-in-refresh-button");
+    const searchWeighIn = document.getElementById("weigh-in-search");
+    const refreshRegistration = document.getElementById("registration-refresh-button");
+    const searchRegistration = document.getElementById("registration-search");
 
     // Tab switching logic
     tabs.forEach(tab => {
@@ -117,32 +127,25 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Form submission logic
     registrationForm.addEventListener("submit", (e) => {
         e.preventDefault(); // Prevent default form submission behavior
         
-        // Collect data from input fields by their IDs
         const entry = {
             firstName: document.getElementById("first-name").value.trim(),
             lastName: document.getElementById("last-name").value.trim(),
+            gender: document.getElementById("gender").value.trim(),
             age: parseFloat(document.getElementById("age").value.trim()),
             grade: document.getElementById("grade").value.trim(),
             rank: document.getElementById("rank").value.trim(),
             branch: document.getElementById("branch").value.trim(),
-            trainerName: document.getElementById("trainer-name").value.trim(),
+            coachName: document.getElementById("coach-name").value.trim(),
             weight: parseFloat(document.getElementById("weight").value.trim()),
             payment: document.getElementById("payment").value.trim(),
             comments: document.getElementById("comments").value.trim(),
         };
 
-        // Validate required fields
-        if (!entry.firstName || !entry.lastName || isNaN(entry.age) || isNaN(entry.weight)) {
-            alert("Please fill out all required fields (First Name, Last Name, Age, Weight).");
-            return;
-        }
-
-        addData(entry); // Add the data to the list
-        registrationForm.reset(); // Clear the form after submission
+        addData(entry);
+        registrationForm.reset();
     });
 
     settingsForm.addEventListener("submit", (e) => {
@@ -159,6 +162,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         renderSettingsList();
         settingsForm.reset();
+    });
+
+    refreshWeighIn.addEventListener("click", () => {
+        renderGroups(athletes);
+    });
+
+    refreshRegistration.addEventListener("click", () => {
+        renderUserList(athletes);
+    });
+
+    searchRegistration.addEventListener("input", (event) => {
+        filterAthletes(event.target.value);
+    });
+
+    searchWeighIn.addEventListener("input", (event) => {
+        filterAthletes(event.target.value);
     });
 });
 

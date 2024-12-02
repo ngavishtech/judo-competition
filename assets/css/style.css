@@ -219,3 +219,9 @@ button {
 #settings-list li:hover .delete-btn {
     display: inline;
 }
+
+#grouped-view ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}

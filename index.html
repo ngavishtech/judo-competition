@@ -23,31 +23,42 @@
         <section id="registration" class="tab-content">
             <h1>Registration</h1>
             <div class="registration-container">
-                <!-- Registration Form -->
                 <form id="registration-form" class="registration-form">
                     <label for="first-name">First Name</label><input type="text" id="first-name" required>
                     <label for="last-name">Last Name</label><input type="text" id="last-name" required>
+                    <label for="gender">Gender</label>
+                    <select id="gender" required>
+                        <option value="" disabled selected></option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
                     <label for="age">Birth Year</label><input type="number" step="0.5" id="age" required>
                     <label for="grade">Grade/Class</label><input type="text" id="grade" required>
                     <label for="rank">Rank/Belt</label><input type="text" id="rank" >
                     <label for="branch">Branch/City</label><input type="text" id="branch" required>
-                    <label for="trainer-name">Coach Name</label><input type="text" id="trainer-name" required>
+                    <label for="coach-name">Coach Name</label><input type="text" id="coach-name" required>
                     <label for="weight">Weight (KG)</label><input type="number" step="0.01" id="weight" required>
                     <label for="payment">Payment Details</label><input type="text" id="payment">
                     <label for="comments">Comments</label><textarea id="comments"></textarea>
                     <button type="submit">Submit</button>
                 </form>
         
-                <!-- Submitted Users Section -->
                 <div id="user-list-container">
-                    <h3>Submitted Users</h3>
+                    <h3>
+                        Submitted Users
+                        <button id="registration-refresh-button" style="cursor: pointer;">&#x21bb; Refresh</button>
+                    </h3>
+                    <input type="text" id="registration-search" placeholder="Search..." />
                     <ul id="user-list"></ul>
                 </div>
             </div>
         </section>
         <section id="weigh-in" class="tab-content hidden">
-            <h1>Weigh-In</h1>
-            <input type="text" id="search" placeholder="Search..." />
+            <h1>
+                Weigh-In
+                <button id="weigh-in-refresh-button" style="cursor: pointer;">&#x21bb; Refresh</button>
+            </h1>
+            <input type="text" id="weigh-in-search" placeholder="Search..." />
             <div id="search-results"></div>
             <div id="grouped-view"></div>
         </section>
@@ -58,8 +69,9 @@
             <h1>Settings</h1>
             <div class="registration-container">
                 <form id="settings-form" class="registration-form">
+                    <label for="gender">Gender</label>
                     <select id="new-gender" required>
-                        <option value="">Select Gender</option>
+                        <option value="" disabled selected></option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                     </select>
@@ -73,7 +85,7 @@
                 </form>
 
                 <div id="current-ranges-container">
-                    <h3>Current Ranges</h3>
+                    <h3>Current Categories</h3>
                     <ul id="settings-list"></ul>
                 </div>
             </div>

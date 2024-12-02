@@ -54,6 +54,32 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Mock form submission (to be replaced with form handling)
-    addData({ firstName: "John", lastName: "Doe", age: 2011, weight: 52 });
-    addData({ firstName: "Jane", lastName: "Smith", age: 2010, weight: 58 });
+    // addData({ firstName: "John", lastName: "Doe", age: 2011, weight: 52 });
+    // addData({ firstName: "Jane", lastName: "Smith", age: 2010, weight: 58 });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const registrationForm = document.getElementById("registration-form");
+
+    registrationForm.addEventListener("submit", (e) => {
+        e.preventDefault(); // Prevent default form submission behavior
+        const formData = new FormData(registrationForm);
+
+        // Create an entry object from form data
+        const entry = {
+            firstName: formData.get("firstName"),
+            lastName: formData.get("lastName"),
+            age: parseInt(formData.get("age"), 10),
+            rank: formData.get("rank"),
+            branch: formData.get("branch"),
+            trainerName: formData.get("trainerName"),
+            weight: parseFloat(formData.get("weight")),
+            payment: formData.get("payment"),
+            comments: formData.get("comments"),
+        };
+
+        addData(entry); // Call addData function
+        registrationForm.reset(); // Clear the form
+    });
+});
+

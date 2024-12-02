@@ -12,6 +12,33 @@ const weightRanges = [{ min: 50, max: 54.99 }, { min: 55, max: 59.99 }];
 const addData = (entry) => {
     data.push(entry);
     renderGroups();
+    renderUserList();
+};
+
+// Function to delete a user
+const deleteUser = (index) => {
+    data.splice(index, 1); // Remove the user from the array
+    renderGroups(); // Re-render groups after deletion
+    renderUserList(); // Re-render the user list
+};
+
+// Function to render the user list
+const renderUserList = () => {
+    const userList = document.getElementById("user-list");
+    userList.innerHTML = ""; // Clear existing list
+
+    data.forEach((user, index) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = `${user.firstName} ${user.lastName} - Age: ${user.age}, Weight: ${user.weight}`;
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete";
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.addEventListener("click", () => deleteUser(index));
+
+        listItem.appendChild(deleteBtn);
+        userList.appendChild(listItem);
+    });
 };
 
 /**

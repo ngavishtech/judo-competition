@@ -25,19 +25,22 @@ const deleteUser = (index) => {
 // Function to render the user list
 const renderUserList = () => {
     const userList = document.getElementById("user-list");
-    userList.innerHTML = ""; // Clear existing list
+    userList.innerHTML = ""; // Clear the list first
 
-    data.forEach((user, index) => {
-        const listItem = document.createElement("li");
-        listItem.textContent = `${user.firstName} ${user.lastName} - Age: ${user.age}, Weight: ${user.weight}`;
+    data.forEach((entry, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+            ${entry.firstName} ${entry.lastName} - Age: ${entry.age}, Weight: ${entry.weight} kg
+            <button class="delete-btn" data-index="${index}">Delete</button>
+        `;
 
-        const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "Delete";
-        deleteBtn.classList.add("delete-btn");
-        deleteBtn.addEventListener("click", () => deleteUser(index));
+        // Add delete functionality
+        li.querySelector(".delete-btn").addEventListener("click", () => {
+            data.splice(index, 1); // Remove from memory
+            renderUserList(); // Re-render the list
+        });
 
-        listItem.appendChild(deleteBtn);
-        userList.appendChild(listItem);
+        userList.appendChild(li);
     });
 };
 
@@ -86,23 +89,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Form submission logic
     registrationForm.addEventListener("submit", (e) => {
-        e.preventDefault(); // Prevent default form submission
-        const formData = new FormData(registrationForm);
-
-        // Create an entry object from form data
+        e.preventDefault(); // Prevent default form submission behavior
+        
+        // Collect data from input fields by their IDs
         const entry = {
-            firstName: formData.get("firstName"),
-            lastName: formData.get("lastName"),
-            age: parseInt(formData.get("age"), 10),
-            rank: formData.get("rank"),
-            branch: formData.get("branch"),
-            trainerName: formData.get("trainerName"),
-            weight: parseFloat(formData.get("weight")),
-            payment: formData.get("payment"),
-            comments: formData.get("comments"),
+            firstName: document.getElementById("first-name").value.trim(),
+            lastName: document.getElementById("last-name").value.trim(),
+            age: parseInt(document.getElementById("age").value.trim(), 10),
+            rank: document.getElementById("rank").value.trim(),
+            branch: document.getElementById("branch").value.trim(),
+            trainerName: document.getElementById("trainer-name").value.trim(),
+            weight: parseFloat(document.getElementById("weight").value.trim()),
+            payment: document.getElementById("payment").value.trim(),
+            comments: document.getElementById("comments").value.trim(),
         };
 
-        addData(entry); // Call the generalized addData function
-        registrationForm.reset(); // Clear the form
+        // Validate required fields
+        if (!entry.firstName || !entry.lastName || isNaN(entry.age) || isNaN(entry.weight)) {
+            alert("Please fill out all required fields (First Name, Last Name, Age, Weight).");
+            return;
+        }
+
+        addData(entry); // Add the data to the list
+        registrationForm.reset(); // Clear the form after submission
     });
 });

@@ -26,12 +26,13 @@
                 <form id="registration-form" class="registration-form">
                     <label for="first-name">First Name:</label><input type="text" id="first-name" required>
                     <label for="last-name">Last Name:</label><input type="text" id="last-name" required>
-                    <label for="age">Age:</label><input type="number" id="age" required>
+                    <label for="age">Age:</label><input type="number" step="0.5" id="age" required>
+                    <label for="grade">Grade:</label><input type="text" id="grade" required>
                     <label for="rank">Rank:</label><input type="text" id="rank" required>
-                    <label for="branch">Branch:</label><input type="text" id="branch">
-                    <label for="trainer-name">Trainer Name:</label><input type="text" id="trainer-name">
-                    <label for="weight">Weight (kg):</label><input type="number" id="weight" required>
-                    <label for="payment">Payment:</label><input type="text" id="payment">
+                    <label for="branch">Branch:</label><input type="text" id="branch" required>
+                    <label for="trainer-name">Trainer Name:</label><input type="text" id="trainer-name" required>
+                    <label for="weight">Weight (kg):</label><input type="number" step="0.01" id="weight" required>
+                    <label for="payment">Payment:</label><input type="text" id="payment" required>
                     <label for="comments">Comments:</label><textarea id="comments"></textarea>
                     <button type="submit">Submit</button>
                 </form>

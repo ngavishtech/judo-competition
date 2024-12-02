@@ -107,3 +107,40 @@ form button:hover {
 #grouped-view {
     margin-top: 20px;
 }
+
+/* User list container */
+#user-list-container {
+    margin-top: 20px;
+    max-height: 150px; /* Set max height for inner scroll */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* User list items */
+#user-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+#user-list li:hover {
+    background-color: #f9f9f9;
+}
+
+/* Delete button (hidden by default) */
+.delete-btn {
+    display: none;
+    cursor: pointer;
+    color: red;
+    border: none;
+    background: none;
+}
+
+/* Show Delete button on hover */
+#user-list li:hover .delete-btn {
+    display: inline;
+}

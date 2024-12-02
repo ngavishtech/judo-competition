@@ -23,15 +23,21 @@ body, h1, form, input, button, textarea {
 .app-name {
     font-size: 1.5rem;
     font-weight: bold;
+    flex-grow: 0;
 }
 
 /* Tabs */
 .tabs {
     display: flex;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     gap: 10px;
 }
 
 .tabs button {
+    flex-shrink: 0;
     padding: 10px 15px;
     background-color: #555;
     color: #fff;
@@ -53,6 +59,7 @@ body, h1, form, input, button, textarea {
 /* Icon */
 .icon {
     font-size: 1.5rem;
+    margin-left: auto;
 }
 
 /* Main Content */

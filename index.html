@@ -29,13 +29,47 @@
                     <label for="gender">מין</label>
                     <select id="gender" required>
                         <option value="" disabled selected></option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
+                        <option value="Male">זכר</option>
+                        <option value="Female">נקבה</option>
                     </select>
                     <label for="age">שנת לידה</label><input type="number" step="0.5" id="age" required>
-                    <label for="grade">כיתה</label><input type="text" id="grade" required>
-                    <label for="rank">חגורה</label><input type="text" id="rank" >
-                    <label for="branch">עיר/סניף</label><input type="text" id="branch" required>
+                    <label for="grade">כיתה</label>
+                    <select id="grade" required>
+                        <option value="" disabled selected></option>
+                        <option value="PrePreSchool">ט.חובה</option>
+                        <option value="PreSchool">חובה</option>
+                        <option value="School1">א</option>
+                        <option value="School2">ב</option>
+                        <option value="School3">ג</option>
+                        <option value="School4">ד</option>
+                        <option value="School5">ה</option>
+                        <option value="School6">ו</option>
+                        <option value="School7">ז</option>
+                        <option value="School8">ח</option>
+                        <option value="School9">ט</option>
+                        <option value="School10">י</option>
+                        <option value="School11">יא</option>
+                        <option value="School12">יב</option>
+                    </select>
+                    <label for="rank">חגורה</label>
+                    <select id="rank" required>
+                        <option value="" disabled selected></option>
+                        <option value="לבנה">לבנה</option>
+                        <option value="לבנה-סגולה">לבנה-סגולה</option>
+                        <option value="סגולה">סגולה</option>
+                        <option value="לבנה-צהובה">לבנה-צהובה</option>
+                        <option value="סגולה-צהובה">סגולה-צהובה</option>
+                        <option value="צהובה">צהובה</option>
+                        <option value="צהובה-כתומה">צהובה-כתומה</option>
+                        <option value="כתומה">כתומה</option>
+                        <option value="כתומה-ירוקה">כתומה-ירוקה</option>
+                        <option value="ירוקה">ירוקה</option>
+                        <option value="ירוקה-כחולה">ירוקה-כחולה</option>
+                        <option value="כחולה">כחולה</option>
+                        <option value="חומה">חומה</option>
+                        <option value="שחורה">שחורה</option>
+                    </select>
+                    <label for="branch">סניף</label><input type="text" id="branch" required>
                     <label for="coach-name">שם המאמן</label><input type="text" id="coach-name" required>
                     <label for="weight">משקל (ק"ג)</label><input type="number" step="0.01" id="weight">
                     <label for="payment">תשלום</label><input type="text" id="payment">
@@ -45,7 +79,7 @@
         
                 <div id="user-list-container">
                     <h3>
-                        Submitted Users
+                        Submitted Athletes
                         <button id="registration-refresh-button" style="cursor: pointer;">&#x21bb; Refresh</button>
                     </h3>
                     <input type="text" id="registration-search" placeholder="Search..." />

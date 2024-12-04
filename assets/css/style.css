@@ -194,12 +194,19 @@ form button:hover {
     overflow-y: auto;
 }
 
+.button-group {
+    display: flex;
+    gap: 25px;
+}
+
 #user-list li, #settings-list li {
     display: flex;
-    justify-content: space-between;
+    gap: 10px;
     align-items: center;
-    padding: 5px 0;
-    border-bottom: 1px solid #eee;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
 }
 
 #user-list li:hover, #settings-list li:hover {
@@ -333,3 +340,117 @@ input, select {
 .league-group strong {
     color: #333;
 }
+
+#create-leagues-btn,
+#delete-leagues-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#create-leagues-btn {
+    background-color: #28a745; /* Green for Create */
+}
+
+#delete-leagues-btn {
+    background-color: #dc3545; /* Red for Delete */
+}
+
+#create-leagues-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+#delete-leagues-btn:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+#delete-leagues-btn:disabled,
+#create-leagues-btn:disabled {
+    background-color: #6c757d; /* Gray for disabled state */
+    cursor: not-allowed;
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.refresh-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: lightsalmon;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.refresh-button:hover {
+    background-color: salmon;
+}
+
+.refresh-button:active {
+    background-color: darksalmon;
+    transform: scale(0.98); /* Subtle press effect */
+}
+
+.cancel-btn {
+    background-color: #ffffff;
+    color: #007bff;
+    border: 2px solid #007bff;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background-color: #f8f9fa;
+}
+
+.save-btn {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.save-btn:hover {
+    background-color: #0056b3;
+}
+
+.league-name-input-field {
+    width: 200px;
+    height: 30px;
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.league-name-input-field:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+

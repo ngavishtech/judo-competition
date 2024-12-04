@@ -79,7 +79,7 @@
                 <div id="user-list-container">
                     <h3>
                         Submitted Athletes
-                        <button id="registration-refresh-button" style="cursor: pointer;">&#x21bb; Refresh</button>
+                        <button id="registration-refresh-button" class="refresh-button">Refresh</button>
                     </h3>
                     <label for="registration-search"></label><input type="text" id="registration-search" placeholder="Search..." />
                     <ul id="user-list"></ul>
@@ -89,16 +89,17 @@
         <section id="weigh-in" class="tab-content hidden">
             <h1>
                 Weigh-In
-                <button id="weigh-in-refresh-button" style="cursor: pointer;">&#x21bb; Refresh</button>
+                <button id="weigh-in-refresh-button" class="refresh-button">Refresh</button>
             </h1>
             <label for="weigh-in-search"></label><input type="text" id="weigh-in-search" placeholder="Search..." />
             <div id="search-results"></div>
             <button id="create-leagues-btn">Create Leagues</button>
+            <button id="delete-leagues-btn">Delete Leagues</button>
             <div id="grouped-view"></div>
         </section>
         <section id="leagues" class="tab-content hidden">
             <h1>Leagues</h1>
-            <div id="leagues-view"></div>
+            <div id="leagues-view">No Leagues</div>
         </section>
         <section id="results" class="tab-content hidden"><h1>Results</h1></section>
         <section id="settings" class="tab-content hidden">

@@ -3,6 +3,7 @@ let athletes = [];
 let settingsRanges = [
     { ageMin: 2010, ageMax: 2011, weightMin: 50, weightMax: 54.99, gender: "Male" },
 ];
+let leagues = {};
 
 const generateUUID = () => {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -104,8 +105,8 @@ const editAthletePopup = (index) => {
                 <label for="weight-edit">משקל (ק"ג)</label><input type="number" step="0.01" id="weight-edit" value="${athletes[index].weight || 0}">
                 <label for="payment-edit">תשלום</label><input type="text" id="payment-edit" value="${athletes[index].payment || ""}">
                 <label for="comments-edit">הערות</label><textarea id="comments-edit">${athletes[index].comments}</textarea>     
-                <button id="edit-athlete-save-btn">Save</button>
-                <button id="edit-athlete-cancel-btn">Cancel</button>
+                <button id="edit-athlete-save-btn" class="save-btn">Save</button>
+                <button id="edit-athlete-cancel-btn" class="cancel-btn">Cancel</button>
             </form>
         </div>
     `;
@@ -146,8 +147,8 @@ const editAthleteWeightPopup = (index, weight) => {
             <form id="update-form" class="update-form">
                 <h1>Edit Athlete Weight</h1>
                 <input type="number" step="0.01" id="edit-weight-input" value="${weight}">
-                <button id="save-btn">Save</button>
-                <button id="cancel-btn">Cancel</button>
+                <button id="save-btn" class="save-btn">Save</button>
+                <button id="cancel-btn" class="cancel-btn">Cancel</button>
             </form>
         </div>
     `;
@@ -173,11 +174,13 @@ const renderAthletesList = (athletesList) => {
 
     athletesList.forEach((entry, index) => {
         const li = document.createElement("li");
-        li.innerHTML = `
+        li.innerHTML = `            
             ${entry.firstName} ${entry.lastName} (${entry.gender}) - Birth Year: ${entry.age}, Weight: ${entry.weight} KG
-            <button class="edit-weight-btn" data-index="${index}">Edit Weight</button>
-            <button class="edit-btn" data-index="${index}">Edit Athlete</button>
-            <button class="delete-btn" data-index="${index}">Delete</button>
+            <div class="button-group">
+                <button class="edit-weight-btn" data-index="${index}">Edit Weight</button>
+                <button class="edit-btn" data-index="${index}">Edit Athlete</button>
+                <button class="delete-btn" data-index="${index}">Delete</button>
+            </div>
         `;
 
         li.querySelector(".delete-btn").addEventListener("click", () => {
@@ -237,7 +240,7 @@ const renderWeighInGroups = (athletesList) => {
                     ${e.firstName} ${e.lastName} (${e.age}, ${e.weight}, ${e.rank})
                     <div class="league-name-input" id="league-name-input-${e.id}" style="display:none;">
                         |<->|
-                        <input type="text" id="league-name-${e.id}" data-league-id="${e.id}" />
+                        <input type="text" class="league-name-input-field" id="league-name-${e.id}" data-league-id="${e.id}" />
                         <label for="league-name-${e.id}">שיוך לליגה</label>
                     </div>
                     <button class="edit-weight-btn" data-index="${athletesList.indexOf(e)}">Edit Weight</button>
@@ -272,25 +275,25 @@ const renderLeagues = () => {
         athletes[athleteIndex].leagueName = document.getElementById(`league-name-${athleteId}`).value.trim() || "No League";
     });
 
-    const groupedData = {};
+    leagues = {};
 
     athletes.forEach((entry) => {
         const groupKey = entry.leagueName;
-        if (!groupedData[groupKey]) groupedData[groupKey] = [];
-        groupedData[groupKey].push(entry);
+        if (!leagues[groupKey]) leagues[groupKey] = [];
+        leagues[groupKey].push(entry);
     });
 
     const leaguesContent = document.getElementById("leagues-view");
     leaguesContent.innerHTML = "";
 
-    Object.keys(groupedData).forEach((group) => {
+    Object.keys(leagues).forEach((group) => {
         const groupEl = document.createElement("div");
         groupEl.innerHTML = `
             <div class="league-group-header" style="background-color: #f0f0f0; padding: 10px; font-weight: bold;">
-                <strong>${group} | Count (${groupedData[group].length})</strong>
+                <strong>${group} | Count (${leagues[group].length})</strong>
             </div>
             <ul>
-                ${groupedData[group]
+                ${leagues[group]
             .map(
                 e => `<li>
                     <input type="checkbox" data-athlete-id="${e.id}" />
@@ -303,6 +306,12 @@ const renderLeagues = () => {
         groupEl.classList.add("league-group");
         leaguesContent.appendChild(groupEl);
     });
+};
+
+const deleteLeagues = () => {
+    leagues = {};
+    const leaguesContent = document.getElementById("leagues-view");
+    leaguesContent.innerHTML = "No Leagues";
 };
 
 const filterAthletes = (searchTerm) => {
@@ -334,7 +343,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const refreshRegistration = document.getElementById("registration-refresh-button");
     const searchRegistration = document.getElementById("registration-search");
     const editWeightWeighIn = document.getElementById("grouped-view");
-    const createLeagues = document.getElementById('create-leagues-btn');
+    const createLeaguesButton = document.getElementById('create-leagues-btn');
+    const deleteLeaguesButton = document.getElementById('delete-leagues-btn');
 
 
     // Tab switching logic
@@ -411,8 +421,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    createLeagues.addEventListener('click', () => {
+    createLeaguesButton.addEventListener('click', () => {
         renderLeagues();
+    });
+
+    deleteLeaguesButton.addEventListener('click', () => {
+        deleteLeagues();
     });
 });
 

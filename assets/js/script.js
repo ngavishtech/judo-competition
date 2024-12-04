@@ -45,8 +45,8 @@ const editAthletePopup = (index) => {
     const popup = document.createElement('div');
     popup.className = 'popup';
     popup.innerHTML = `
-        <div class="popup-content">
-            <label>Edit Athlete</label>
+        <div class="popup-content">           
+            <h1>Edit Athlete</h1>
             <label for="first-name-edit">First Name</label><input type="text" id="first-name-edit" value="${athletes[index].firstName || ""}" required>
             <label for="last-name-edit">Last Name</label><input type="text" id="last-name-edit" value="${athletes[index].lastName || ""}" required>
             <label for="gender-edit">Gender</label>
@@ -101,7 +101,7 @@ const editWeightPopup = (index, weight) => {
     popup.className = 'popup';
     popup.innerHTML = `
         <div class="popup-content">
-            <label>Edit Athlete Weight</label>
+            <h1>Edit Athlete Weight</h1>
             <input type="number" step="0.01" id="edit-weight-input" value="${weight}">
             <button id="save-btn">Save</button>
             <button id="cancel-btn">Cancel</button>

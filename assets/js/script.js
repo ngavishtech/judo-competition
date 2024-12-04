@@ -4,6 +4,14 @@ let settingsRanges = [
     { ageMin: 2010, ageMax: 2011, weightMin: 50, weightMax: 54.99, gender: "Male" },
 ];
 
+const generateUUID = () => {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+            v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
 const renderSettingsList = () => {
     const settingsList = document.getElementById("settings-list");
     settingsList.innerHTML = "";
@@ -221,16 +229,77 @@ const renderGroups = (athletesList) => {
             ${groupedData[group]
             .map(
                 e => `<li>
-                        <input type="checkbox" data-athlete-id="${e.id}" />
-                        ${e.firstName} ${e.lastName} (${e.age}, ${e.weight}, ${e.rank})
-                        <button class="edit-weight-btn" data-index="${athletesList.indexOf(e)}">Edit Weight</button>
-                    </li>`
+                    <input type="checkbox" data-athlete-id="${e.id}" />
+                    ${e.firstName} ${e.lastName} (${e.age}, ${e.weight}, ${e.rank})
+                    <div class="league-name-input" id="league-name-input-${e.id}" style="display:none;">
+                        |<->|
+                        <input type="text" id="league-name-${e.id}" data-league-id="${e.id}" />
+                        <label for="league-name-${e.id}">שיוך לליגה</label>
+                    </div>
+                    <button class="edit-weight-btn" data-index="${athletesList.indexOf(e)}">Edit Weight</button>
+                </li>`
             )
             .join("")}
         </ul>
         `;
         groupEl.classList.add("group");
         weighInContent.appendChild(groupEl);
+    });
+
+    // Show input field when checkbox is selected
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', (event) => {
+            const athleteId = event.target.getAttribute('data-athlete-id');
+            const inputField = document.getElementById(`league-name-input-${athleteId}`);
+            if (event.target.checked) {
+                inputField.style.display = 'inline';
+            } else {
+                inputField.style.display = 'none';
+            }
+        });
+    });
+
+};
+
+const renderLeagues = () => {
+    const selectedAthletes = [];
+    document.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
+        const athleteId = checkbox.getAttribute('data-athlete-id');
+        const athlete = athletes.find((athlete) => athlete.id === athleteId);
+        athlete.leagueName = document.getElementById(`league-name-${athleteId}`).value.trim();
+        selectedAthletes.push(athlete);
+    });
+
+    const groupedData = {};
+
+    selectedAthletes.forEach((entry) => {
+        const groupKey = entry.leagueName;
+        if (!groupedData[groupKey]) groupedData[groupKey] = [];
+        groupedData[groupKey].push(entry);
+    });
+
+    const leaguesContent = document.getElementById("leagues-view");
+    leaguesContent.innerHTML = "";
+
+    Object.keys(groupedData).forEach((group) => {
+        const groupEl = document.createElement("div");
+        groupEl.innerHTML = `
+            <div class="league-group-header" style="background-color: #f0f0f0; padding: 10px; font-weight: bold;">
+                <strong>${group} | Count (${groupedData[group].length})</strong>
+            </div>
+            <ul>
+                ${groupedData[group]
+            .map(
+                e => `<li>
+                    <input type="checkbox" data-athlete-id="${e.id}" />
+                    ${e.firstName} ${e.lastName} (${e.age}, ${e.weight}, ${e.rank})
+                </li>`
+            )
+            .join("")}
+            </ul>
+        `;
+        groupEl.classList.add("league-group");
+        leaguesContent.appendChild(groupEl);
     });
 };
 
@@ -264,6 +333,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const refreshRegistration = document.getElementById("registration-refresh-button");
     const searchRegistration = document.getElementById("registration-search");
     const editWeightWeighIn = document.getElementById("grouped-view");
+    const createLeagues = document.getElementById('create-leagues-btn');
+
 
     // Tab switching logic
     tabs.forEach(tab => {
@@ -280,6 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault(); // Prevent default form submission behavior
         
         const entry = {
+            id: generateUUID(),
             firstName: document.getElementById("first-name").value.trim(),
             lastName: document.getElementById("last-name").value.trim(),
             gender: document.getElementById("gender").value.trim(),
@@ -335,6 +407,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const weight = athletes[index]?.weight || 0;
             editWeightPopup(index, weight);
         }
+    });
+
+    createLeagues.addEventListener('click', () => {
+        renderLeagues();
     });
 });
 

@@ -12,9 +12,8 @@
         <nav class="tabs">
             <button data-tab="registration">Registration</button>
             <button data-tab="weigh-in">Weigh-In</button>
-            <button data-tab="tab3">Tab 3</button>
-            <button data-tab="tab4">Tab 4</button>
-            <button data-tab="tab5">Tab 5</button>
+            <button data-tab="leagues">Leagues</button>
+            <button data-tab="results">Results</button>
             <button data-tab="settings">⚙️</button>
         </nav>
         <div class="icon">⚙️</div>
@@ -94,11 +93,14 @@
             </h1>
             <input type="text" id="weigh-in-search" placeholder="Search..." />
             <div id="search-results"></div>
+            <button id="create-leagues-btn">Create Leagues</button>
             <div id="grouped-view"></div>
         </section>
-        <section id="tab3" class="tab-content hidden"><h1>Tab 3 Content</h1></section>
-        <section id="tab4" class="tab-content hidden"><h1>Tab 4 Content</h1></section>
-        <section id="tab5" class="tab-content hidden"><h1>Tab 5 Content</h1></section>
+        <section id="leagues" class="tab-content hidden">
+            <h1>Leagues</h1>
+            <div id="leagues-view"></div>
+        </section>
+        <section id="results" class="tab-content hidden"><h1>Results</h1></section>
         <section id="settings" class="tab-content hidden">
             <h1>Settings</h1>
             <div class="registration-container">

@@ -6,7 +6,7 @@ let settingsRanges = [
 
 const generateUUID = () => {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random() * 16 | 0,
+        let r = Math.random() * 16 | 0,
             v = c === 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
@@ -52,60 +52,61 @@ const editAthletePopup = (index) => {
     popup.className = 'popup';
     popup.innerHTML = `
         <div class="popup-content">           
-            <h1>Edit Athlete</h1>
-            <label for="first-name-edit">שם פרטי</label><input type="text" id="first-name-edit" value="${athletes[index].firstName || ""}" required>
-            <label for="last-name-edit">שם משפחה</label><input type="text" id="last-name-edit" value="${athletes[index].lastName || ""}" required>
-            <label for="gender-edit">מין</label>
-            <select id="gender-edit" required>
-                <option value="" disabled ${!athletes[index].gender ? "selected" : ""}></option>
-                <option value="Male" ${athletes[index].gender === "Male" ? "selected" : ""}>זכר</option>
-                <option value="Female" ${athletes[index].gender === "Female" ? "selected" : ""}>נקבה</option>
-            </select>
-            <label for="age-edit">שנת לידה</label><input type="number" step="0.5" id="age-edit" value="${athletes[index].age || 0}" required>
-            <label for="grade-edit">כיתה</label>
-            <select id="grade-edit" required>
-                <option value="" disabled ${!athletes[index].grade ? "selected" : ""}></option>
-                <option value="PrePreSchool" ${athletes[index].grade === "PrePreSchool" ? "selected": ""}>ט.חובה</option>
-                <option value="PreSchool" ${athletes[index].grade === "PreSchool" ? "selected": ""}>חובה</option>
-                <option value="School1" ${athletes[index].grade === "School1" ? "selected": ""}>א</option>
-                <option value="School2" ${athletes[index].grade === "School2" ? "selected": ""}>ב</option>
-                <option value="School3" ${athletes[index].grade === "School3" ? "selected": ""}>ג</option>
-                <option value="School4" ${athletes[index].grade === "School4" ? "selected": ""}>ד</option>
-                <option value="School5" ${athletes[index].grade === "School5" ? "selected": ""}>ה</option>
-                <option value="School6" ${athletes[index].grade === "School6" ? "selected": ""}>ו</option>
-                <option value="School7" ${athletes[index].grade === "School7" ? "selected": ""}>ז</option>
-                <option value="School8" ${athletes[index].grade === "School8" ? "selected": ""}>ח</option>
-                <option value="School9" ${athletes[index].grade === "School9" ? "selected": ""}>ט</option>
-                <option value="School10" ${athletes[index].grade === "School10" ? "selected": ""}>י</option>
-                <option value="School11" ${athletes[index].grade === "School11" ? "selected": ""}>יא</option>
-                <option value="School12" ${athletes[index].grade === "School12" ? "selected": ""}>יב</option>
-            </select>
-            <label for="rank-edit">חגורה</label>
-            <select id="rank-edit" required>
-                <option value="" disabled ${!athletes[index].rank ? "selected" : ""}></option>
-                <option value="לבנה" ${athletes[index].rank === "לבנה" ? "selected": ""}>לבנה</option>
-                <option value="לבנה-סגולה" ${athletes[index].rank === "לבנה-סגולה" ? "selected": ""}>לבנה-סגולה</option>
-                <option value="סגולה" ${athletes[index].rank === "סגולה" ? "selected": ""}>סגולה</option>
-                <option value="לבנה-צהובה" ${athletes[index].rank === "לבנה-צהובה" ? "selected": ""}>לבנה-צהובה</option>
-                <option value="סגולה-צהובה" ${athletes[index].rank === "סגולה-צהובה" ? "selected": ""}>סגולה-צהובה</option>
-                <option value="צהובה" ${athletes[index].rank === "צהובה" ? "selected": ""}>צהובה</option>
-                <option value="צהובה-כתומה" ${athletes[index].rank === "צהובה-כתומה" ? "selected": ""}>צהובה-כתומה</option>
-                <option value="כתומה" ${athletes[index].rank === "כתומה" ? "selected": ""}>כתומה</option>
-                <option value="כתומה-ירוקה" ${athletes[index].rank === "כתומה-ירוקה" ? "selected": ""}>כתומה-ירוקה</option>
-                <option value="ירוקה" ${athletes[index].rank === "ירוקה" ? "selected": ""}>ירוקה</option>
-                <option value="ירוקה-כחולה" ${athletes[index].rank === "ירוקה-כחולה" ? "selected": ""}>ירוקה-כחולה</option>
-                <option value="כחולה" ${athletes[index].rank === "כחולה" ? "selected": ""}>כחולה</option>
-                <option value="חומה" ${athletes[index].rank === "חומה" ? "selected": ""}>חומה</option>
-                <option value="שחורה" ${athletes[index].rank === "שחורה" ? "selected": ""}>שחורה</option>
-            </select>
-            <label for="branch-edit">סניף</label><input type="text" id="branch-edit" value="${athletes[index].branch || ""}" required>
-            <label for="coach-name-edit">שם מאמן</label><input type="text" id="coach-name-edit" value="${athletes[index].coachName || ""}" required>
-            <label for="weight-edit">משקל (ק"ג)</label><input type="number" step="0.01" id="weight-edit" value="${athletes[index].weight || 0}">
-            <label for="payment-edit">תשלום</label><input type="text" id="payment-edit" value="${athletes[index].payment || ""}">
-            <label for="comments-edit">הערות</label><textarea id="comments-edit">${athletes[index].comments}</textarea>
-                        
-            <button id="edit-athlete-save-btn">Save</button>
-            <button id="edit-athlete-cancel-btn">Cancel</button>
+            <form id="update-form" class="update-form">
+                <h1>Edit Athlete</h1>
+                <label for="first-name-edit">שם פרטי *</label><input type="text" id="first-name-edit" value="${athletes[index].firstName || ""}" required>
+                <label for="last-name-edit">שם משפחה *</label><input type="text" id="last-name-edit" value="${athletes[index].lastName || ""}" required>
+                <label for="gender-edit">מין *</label>
+                <select id="gender-edit" required>
+                    <option value="" disabled ${!athletes[index].gender ? "selected" : ""}></option>
+                    <option value="Male" ${athletes[index].gender === "Male" ? "selected" : ""}>זכר</option>
+                    <option value="Female" ${athletes[index].gender === "Female" ? "selected" : ""}>נקבה</option>
+                </select>
+                <label for="age-edit">שנת לידה *</label><input type="number" step="0.5" id="age-edit" value="${athletes[index].age || 0}" required>
+                <label for="grade-edit">כיתה</label>
+                <select id="grade-edit">
+                    <option value="" disabled ${!athletes[index].grade ? "selected" : ""}></option>
+                    <option value="PrePreSchool" ${athletes[index].grade === "PrePreSchool" ? "selected": ""}>ט.חובה</option>
+                    <option value="PreSchool" ${athletes[index].grade === "PreSchool" ? "selected": ""}>חובה</option>
+                    <option value="School1" ${athletes[index].grade === "School1" ? "selected": ""}>א</option>
+                    <option value="School2" ${athletes[index].grade === "School2" ? "selected": ""}>ב</option>
+                    <option value="School3" ${athletes[index].grade === "School3" ? "selected": ""}>ג</option>
+                    <option value="School4" ${athletes[index].grade === "School4" ? "selected": ""}>ד</option>
+                    <option value="School5" ${athletes[index].grade === "School5" ? "selected": ""}>ה</option>
+                    <option value="School6" ${athletes[index].grade === "School6" ? "selected": ""}>ו</option>
+                    <option value="School7" ${athletes[index].grade === "School7" ? "selected": ""}>ז</option>
+                    <option value="School8" ${athletes[index].grade === "School8" ? "selected": ""}>ח</option>
+                    <option value="School9" ${athletes[index].grade === "School9" ? "selected": ""}>ט</option>
+                    <option value="School10" ${athletes[index].grade === "School10" ? "selected": ""}>י</option>
+                    <option value="School11" ${athletes[index].grade === "School11" ? "selected": ""}>יא</option>
+                    <option value="School12" ${athletes[index].grade === "School12" ? "selected": ""}>יב</option>
+                </select>
+                <label for="rank-edit">חגורה</label>
+                <select id="rank-edit">
+                    <option value="" disabled ${!athletes[index].rank ? "selected" : ""}></option>
+                    <option value="לבנה" ${athletes[index].rank === "לבנה" ? "selected": ""}>לבנה</option>
+                    <option value="לבנה-סגולה" ${athletes[index].rank === "לבנה-סגולה" ? "selected": ""}>לבנה-סגולה</option>
+                    <option value="סגולה" ${athletes[index].rank === "סגולה" ? "selected": ""}>סגולה</option>
+                    <option value="לבנה-צהובה" ${athletes[index].rank === "לבנה-צהובה" ? "selected": ""}>לבנה-צהובה</option>
+                    <option value="סגולה-צהובה" ${athletes[index].rank === "סגולה-צהובה" ? "selected": ""}>סגולה-צהובה</option>
+                    <option value="צהובה" ${athletes[index].rank === "צהובה" ? "selected": ""}>צהובה</option>
+                    <option value="צהובה-כתומה" ${athletes[index].rank === "צהובה-כתומה" ? "selected": ""}>צהובה-כתומה</option>
+                    <option value="כתומה" ${athletes[index].rank === "כתומה" ? "selected": ""}>כתומה</option>
+                    <option value="כתומה-ירוקה" ${athletes[index].rank === "כתומה-ירוקה" ? "selected": ""}>כתומה-ירוקה</option>
+                    <option value="ירוקה" ${athletes[index].rank === "ירוקה" ? "selected": ""}>ירוקה</option>
+                    <option value="ירוקה-כחולה" ${athletes[index].rank === "ירוקה-כחולה" ? "selected": ""}>ירוקה-כחולה</option>
+                    <option value="כחולה" ${athletes[index].rank === "כחולה" ? "selected": ""}>כחולה</option>
+                    <option value="חומה" ${athletes[index].rank === "חומה" ? "selected": ""}>חומה</option>
+                    <option value="שחורה" ${athletes[index].rank === "שחורה" ? "selected": ""}>שחורה</option>
+                </select>
+                <label for="branch-edit">סניף *</label><input type="text" id="branch-edit" value="${athletes[index].branch || ""}" required>
+                <label for="coach-name-edit">שם מאמן *</label><input type="text" id="coach-name-edit" value="${athletes[index].coachName || ""}" required>
+                <label for="weight-edit">משקל (ק"ג)</label><input type="number" step="0.01" id="weight-edit" value="${athletes[index].weight || 0}">
+                <label for="payment-edit">תשלום</label><input type="text" id="payment-edit" value="${athletes[index].payment || ""}">
+                <label for="comments-edit">הערות</label><textarea id="comments-edit">${athletes[index].comments}</textarea>     
+                <button id="edit-athlete-save-btn">Save</button>
+                <button id="edit-athlete-cancel-btn">Cancel</button>
+            </form>
         </div>
     `;
     document.body.appendChild(popup);
@@ -124,6 +125,7 @@ const editAthletePopup = (index) => {
             weight: parseFloat(document.getElementById("weight-edit").value.trim()),
             payment: document.getElementById("payment-edit").value.trim(),
             comments: document.getElementById("comments-edit").value.trim(),
+            leagueName: "No League",
         };
         document.body.removeChild(popup);
         renderGroups(athletes);
@@ -141,10 +143,12 @@ const editWeightPopup = (index, weight) => {
     popup.className = 'popup';
     popup.innerHTML = `
         <div class="popup-content">
-            <h1>Edit Athlete Weight</h1>
-            <input type="number" step="0.01" id="edit-weight-input" value="${weight}">
-            <button id="save-btn">Save</button>
-            <button id="cancel-btn">Cancel</button>
+            <form id="update-form" class="update-form">
+                <h1>Edit Athlete Weight</h1>
+                <input type="number" step="0.01" id="edit-weight-input" value="${weight}">
+                <button id="save-btn">Save</button>
+                <button id="cancel-btn">Cancel</button>
+            </form>
         </div>
     `;
     document.body.appendChild(popup);
@@ -262,17 +266,15 @@ const renderGroups = (athletesList) => {
 };
 
 const renderLeagues = () => {
-    const selectedAthletes = [];
     document.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
         const athleteId = checkbox.getAttribute('data-athlete-id');
-        const athlete = athletes.find((athlete) => athlete.id === athleteId);
-        athlete.leagueName = document.getElementById(`league-name-${athleteId}`).value.trim();
-        selectedAthletes.push(athlete);
+        const athleteIndex = athletes.findIndex((athlete) => athlete.id === athleteId)
+        athletes[athleteIndex].leagueName = document.getElementById(`league-name-${athleteId}`).value.trim() || "No League";
     });
 
     const groupedData = {};
 
-    selectedAthletes.forEach((entry) => {
+    athletes.forEach((entry) => {
         const groupKey = entry.leagueName;
         if (!groupedData[groupKey]) groupedData[groupKey] = [];
         groupedData[groupKey].push(entry);
@@ -327,7 +329,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const tabContents = document.querySelectorAll(".tab-content");
     const registrationForm = document.getElementById("registration-form");
     const settingsForm = document.getElementById("settings-form");
-    const settingsList = document.getElementById("settings-list");
     const refreshWeighIn = document.getElementById("weigh-in-refresh-button");
     const searchWeighIn = document.getElementById("weigh-in-search");
     const refreshRegistration = document.getElementById("registration-refresh-button");
@@ -363,6 +364,7 @@ document.addEventListener("DOMContentLoaded", () => {
             weight: parseFloat(document.getElementById("weight").value.trim()),
             payment: document.getElementById("payment").value.trim(),
             comments: document.getElementById("comments").value.trim(),
+            leagueName: "No League",
         };
 
         addAthlete(entry);

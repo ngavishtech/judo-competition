@@ -23,17 +23,17 @@
             <h1>Registration</h1>
             <div class="registration-container">
                 <form id="registration-form" class="registration-form">
-                    <label for="first-name">שם פרטי</label><input type="text" id="first-name" required>
-                    <label for="last-name">שם משפחה</label><input type="text" id="last-name" required>
-                    <label for="gender">מין</label>
+                    <label for="first-name">שם פרטי *</label><input type="text" id="first-name" required>
+                    <label for="last-name">שם משפחה *</label><input type="text" id="last-name" required>
+                    <label for="gender">מין *</label>
                     <select id="gender" required>
                         <option value="" disabled selected></option>
                         <option value="Male">זכר</option>
                         <option value="Female">נקבה</option>
                     </select>
-                    <label for="age">שנת לידה</label><input type="number" step="0.5" id="age" required>
+                    <label for="age">שנת לידה *</label><input type="number" step="0.5" id="age" required>
                     <label for="grade">כיתה</label>
-                    <select id="grade" required>
+                    <select id="grade">
                         <option value="" disabled selected></option>
                         <option value="PrePreSchool">ט.חובה</option>
                         <option value="PreSchool">חובה</option>
@@ -51,7 +51,7 @@
                         <option value="School12">יב</option>
                     </select>
                     <label for="rank">חגורה</label>
-                    <select id="rank" required>
+                    <select id="rank">
                         <option value="" disabled selected></option>
                         <option value="לבנה">לבנה</option>
                         <option value="לבנה-סגולה">לבנה-סגולה</option>
@@ -68,8 +68,8 @@
                         <option value="חומה">חומה</option>
                         <option value="שחורה">שחורה</option>
                     </select>
-                    <label for="branch">סניף</label><input type="text" id="branch" required>
-                    <label for="coach-name">שם המאמן</label><input type="text" id="coach-name" required>
+                    <label for="branch">סניף *</label><input type="text" id="branch" required>
+                    <label for="coach-name">שם המאמן *</label><input type="text" id="coach-name" required>
                     <label for="weight">משקל (ק"ג)</label><input type="number" step="0.01" id="weight">
                     <label for="payment">תשלום</label><input type="text" id="payment">
                     <label for="comments">הערות</label><textarea id="comments"></textarea>
@@ -81,7 +81,7 @@
                         Submitted Athletes
                         <button id="registration-refresh-button" style="cursor: pointer;">&#x21bb; Refresh</button>
                     </h3>
-                    <input type="text" id="registration-search" placeholder="Search..." />
+                    <label for="registration-search"></label><input type="text" id="registration-search" placeholder="Search..." />
                     <ul id="user-list"></ul>
                 </div>
             </div>
@@ -91,7 +91,7 @@
                 Weigh-In
                 <button id="weigh-in-refresh-button" style="cursor: pointer;">&#x21bb; Refresh</button>
             </h1>
-            <input type="text" id="weigh-in-search" placeholder="Search..." />
+            <label for="weigh-in-search"></label><input type="text" id="weigh-in-search" placeholder="Search..." />
             <div id="search-results"></div>
             <button id="create-leagues-btn">Create Leagues</button>
             <div id="grouped-view"></div>
@@ -105,7 +105,7 @@
             <h1>Settings</h1>
             <div class="registration-container">
                 <form id="settings-form" class="registration-form">
-                    <label for="gender">Gender</label>
+                    <label for="new-gender">Gender</label>
                     <select id="new-gender" required>
                         <option value="" disabled selected></option>
                         <option value="Male">Male</option>

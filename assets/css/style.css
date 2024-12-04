@@ -159,6 +159,11 @@ form button:hover {
     max-width: 60%;
 }
 
+.update-form {
+    flex: 1;
+    max-width: 100%;
+}
+
 #settings-list {
     list-style: none;
     padding: 0;

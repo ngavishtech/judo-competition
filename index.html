@@ -14,7 +14,7 @@
             <button data-tab="weigh-in">Weigh-In</button>
             <button data-tab="leagues">Leagues</button>
             <button data-tab="results">Results</button>
-            <button data-tab="settings">⚙️</button>
+            <button data-tab="settings">Categories ⚙️</button>
         </nav>
         <div class="icon">⚙️</div>
     </header>
@@ -102,20 +102,20 @@
         </section>
         <section id="results" class="tab-content hidden"><h1>Results</h1></section>
         <section id="settings" class="tab-content hidden">
-            <h1>Settings</h1>
+            <h1>Categories Settings</h1>
             <div class="registration-container">
                 <form id="settings-form" class="registration-form">
-                    <label for="new-gender">Gender</label>
+                    <label for="new-gender">מין *</label>
                     <select id="new-gender" required>
                         <option value="" disabled selected></option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
+                        <option value="זכר">זכר</option>
+                        <option value="נקבה">נקבה</option>
                     </select>
-                    <label for="new-age-from">From Birth Year</label><input type="number" id="new-age-from" required>
-                    <label for="new-age-to">To Birth Year</label><input type="number" id="new-age-to" required>
+                    <label for="new-age-from">משנת לידה *</label><input type="number" id="new-age-from" required>
+                    <label for="new-age-to">עד שנת לידה *</label><input type="number" id="new-age-to" required>
 
-                    <label for="new-weight-from">From Weight (KG)</label><input type="number" step="0.01" id="new-weight-from" required>
-                    <label for="new-weight-to">To Weight (KG)</label><input type="number" step="0.01" id="new-weight-to" required>
+                    <label for="new-weight-from">ממשקל (ק"ג) *</label><input type="number" step="0.01" id="new-weight-from" required>
+                    <label for="new-weight-to">עד משקל (ק"ג) *</label><input type="number" step="0.01" id="new-weight-to" required>
 
                     <button type="submit">Submit</button>
                 </form>

@@ -19,8 +19,8 @@ const renderSettingsList = () => {
     settingsRanges.forEach((range, index) => {
         const li = document.createElement("li");
         li.innerHTML = `
-            Birth Year: ${range.ageMin}-${range.ageMax}, 
-            Weight (KG): ${range.weightMin}-${range.weightMax}, 
+            Birth Year: ${range.ageMin} -> ${range.ageMax}, 
+            Weight (KG): ${range.weightMin} -> ${range.weightMax}, 
             Gender: ${range.gender}
             <button class="delete-btn" data-index="${index}">Delete</button>`;
         li.querySelector(".delete-btn").addEventListener("click", () => {
@@ -37,14 +37,14 @@ const removeSetting = (index) => {
 
 const addAthlete = (entry) => {
     athletes.push(entry);
-    renderGroups(athletes);
-    renderUserList(athletes);
+    renderWeighInGroups(athletes);
+    renderAthletesList(athletes);
 };
 
 const deleteAthlete = (index) => {
     athletes.splice(index, 1);
-    renderGroups(athletes);
-    renderUserList(athletes);
+    renderWeighInGroups(athletes);
+    renderAthletesList(athletes);
 };
 
 const editAthletePopup = (index) => {
@@ -128,8 +128,8 @@ const editAthletePopup = (index) => {
             leagueName: "No League",
         };
         document.body.removeChild(popup);
-        renderGroups(athletes);
-        renderUserList(athletes);
+        renderWeighInGroups(athletes);
+        renderAthletesList(athletes);
     });
 
     // Close the popup without saving
@@ -138,7 +138,7 @@ const editAthletePopup = (index) => {
     });
 };
 
-const editWeightPopup = (index, weight) => {
+const editAthleteWeightPopup = (index, weight) => {
     const popup = document.createElement('div');
     popup.className = 'popup';
     popup.innerHTML = `
@@ -157,8 +157,8 @@ const editWeightPopup = (index, weight) => {
     document.getElementById('save-btn').addEventListener('click', () => {
         athletes[index].weight = document.getElementById('edit-weight-input').value.trim();
         document.body.removeChild(popup);
-        renderGroups(athletes);
-        renderUserList(athletes);
+        renderWeighInGroups(athletes);
+        renderAthletesList(athletes);
     });
 
     // Close the popup without saving
@@ -167,7 +167,7 @@ const editWeightPopup = (index, weight) => {
     });
 };
 
-const renderUserList = (athletesList) => {
+const renderAthletesList = (athletesList) => {
     const athleteList = document.getElementById("user-list");
     athleteList.innerHTML = "";
 
@@ -187,14 +187,14 @@ const renderUserList = (athletesList) => {
             editAthletePopup(index);
         });
         li.querySelector(".edit-weight-btn").addEventListener("click", () => {
-            editWeightPopup(index, entry.weight)
+            editAthleteWeightPopup(index, entry.weight)
         })
 
         athleteList.appendChild(li);
     });
 };
 
-const renderGroups = (athletesList) => {
+const renderWeighInGroups = (athletesList) => {
     const groupedData = {};
 
     athletesList.forEach((entry) => {
@@ -320,8 +320,8 @@ const filterAthletes = (searchTerm) => {
         athlete.comments.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    renderUserList(filteredAthletes)
-    renderGroups(filteredAthletes)
+    renderAthletesList(filteredAthletes)
+    renderWeighInGroups(filteredAthletes)
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -388,11 +388,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     refreshWeighIn.addEventListener("click", () => {
-        renderGroups(athletes);
+        renderWeighInGroups(athletes);
     });
 
     refreshRegistration.addEventListener("click", () => {
-        renderUserList(athletes);
+        renderAthletesList(athletes);
     });
 
     searchRegistration.addEventListener("input", (event) => {
@@ -407,7 +407,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (event.target.classList.contains("edit-weight-btn")) {
             const index = parseInt(event.target.dataset.index, 10);
             const weight = athletes[index]?.weight || 0;
-            editWeightPopup(index, weight);
+            editAthleteWeightPopup(index, weight);
         }
     });
 

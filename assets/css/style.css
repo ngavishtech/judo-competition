@@ -67,6 +67,7 @@ main {
     padding: 20px;
 }
 
+/* Tab Content */
 .tab-content {
     display: none;
 }
@@ -114,13 +115,62 @@ form button:hover {
 
 /* Grouped View */
 #grouped-view {
+    flex: 2;
+    max-width: 40%;
     margin-top: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+#grouped-view .group {
+    background-color: #f0f8ff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#grouped-view li {
+    position: relative;
+}
+
+#grouped-view li:hover .edit-btn {
+    display: inline-block;
+}
+
+#grouped-view li:hover .edit-weight-btn {
+    display: inline-block;
+}
+
+/* Layout for Registration Tab */
+.registration-container {
+    display: flex;
+    flex-wrap: wrap; /* Ensure responsiveness */
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.registration-form {
+    flex: 1;
+    max-width: 60%;
+}
+
+#settings-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 /* User List Container */
 #user-list-container,
 #current-ranges-container {
-    flex: 2; /* Take up more space */
+    flex: 2;
     max-width: 60%;
     margin-top: 20px;
     max-height: 400px;
@@ -131,8 +181,7 @@ form button:hover {
     background-color: #f9f9f9;
 }
 
-/* User List Styling */
-#user-list {
+#user-list, #settings-list {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -140,7 +189,7 @@ form button:hover {
     overflow-y: auto;
 }
 
-#user-list li {
+#user-list li, #settings-list li {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -148,11 +197,7 @@ form button:hover {
     border-bottom: 1px solid #eee;
 }
 
-#user-list li:hover {
-    background-color: #f1f1f1;
-}
-
-#settings-list li:hover {
+#user-list li:hover, #settings-list li:hover {
     background-color: #f1f1f1;
 }
 
@@ -169,73 +214,73 @@ button {
     background: none;
 }
 
-#user-list li:hover .delete-btn {
-    display: inline;
-}
-
-/* Layout for Registration Tab */
-.registration-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 20px;
-}
-
-.registration-form {
-    flex: 1;
-    max-width: 60%;
-}
-
-#settings-list {
-    list-style: none; /* Removes bullet points */
-    padding: 0;       /* Removes default padding */
-    margin: 0;        /* Removes default margin */
-}
-
-/* User List Container */
-#settings-list container,
-#current-ranges-container {
-    flex: 2; /* Take up more space */
-    max-width: 60%;
-    margin-top: 20px;
-    max-height: 400px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-/* settings-list Styling */
-#settings-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-#settings-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 0;
-    border-bottom: 1px solid #eee;
-}
-
+#user-list li:hover .delete-btn,
 #settings-list li:hover .delete-btn {
     display: inline;
 }
 
-#grouped-view ul {
-    list-style-type: none;
+.edit-btn {
+    display: none;
+    cursor: pointer;
+    color: red;
+    border: none;
+    background: none;
+}
+
+.edit-weight-btn {
+    display: none;
+    cursor: pointer;
+    color: red;
+    border: none;
+    background: none;
+}
+
+#user-list li:hover .edit-btn,
+#settings-list li:hover .edit-btn,
+#user-list li:hover .edit-weight-btn,
+#settings-list li:hover .edit-weight-btn{
+    display: inline;
+}
+
+/* Input Fields and Checkboxes */
+input[type="checkbox"] {
     margin: 0;
-    padding: 0;
+    vertical-align: middle;
 }
 
 input, select {
-    height: 40px; /* Set a consistent height */
-    padding: 0 10px; /* Adjust padding */
-    font-size: 16px; /* Ensure the font size matches */
-    box-sizing: border-box; /* Include padding and border in the height calculation */
+    height: 40px;
+    padding: 0 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Popup */
+.popup {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 40px;
+    width: 400px;
+    height: auto;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    z-index: 1000;
+}
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#edit-popup button {
+    margin-right: 10px;
+}
+
+#grouped-view ul, #weigh-in-list {
+    list-style-type: none; /* Removes bullets */
 }

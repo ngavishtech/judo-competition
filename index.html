@@ -14,15 +14,29 @@
             <button data-tab="weigh-in">Weigh-In</button>
             <button data-tab="leagues">Leagues</button>
             <button data-tab="results">Results</button>
-            <button data-tab="settings">Categories ⚙️</button>
+            <button data-tab="settings">Categories</button>
         </nav>
-        <div class="icon">⚙️</div>
+        <div class="toggle-switches">
+            <label class="switch">
+                <input type="checkbox" id="local-toggle">
+                <span class="slider">Local Storage (Manual Save)</span>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="cloud-toggle">
+                <span class="slider">Cloud Storage (Automatic)</span>
+            </label>
+        </div>
     </header>
     <main>
         <section id="registration" class="tab-content">
-            <h1>Registration</h1>
             <div class="registration-container">
+                <form id="competition-registration-form" class="registration-form" style="display:none">
+                    <h1>Competition Registration</h1>
+                    <label for="competition-name">שם התחרות *</label><input type="text" id="competition-name" required>
+                    <button type="submit">Submit</button>
+                </form>
                 <form id="registration-form" class="registration-form">
+                    <h1>Athletes Registration</h1>
                     <label for="first-name">שם פרטי *</label><input type="text" id="first-name" required>
                     <label for="last-name">שם משפחה *</label><input type="text" id="last-name" required>
                     <label for="gender">מין *</label>
@@ -103,9 +117,9 @@
         </section>
         <section id="results" class="tab-content hidden"><h1>Results</h1></section>
         <section id="settings" class="tab-content hidden">
-            <h1>Categories Settings</h1>
             <div class="registration-container">
                 <form id="settings-form" class="registration-form">
+                    <h1>Categories Settings</h1>
                     <label for="new-gender">מין *</label>
                     <select id="new-gender" required>
                         <option value="" disabled selected></option>
@@ -127,6 +141,7 @@
                 </div>
             </div>
         </section>
+        <div id="toast" class="toast"></div>
     </main>
     <script src="assets/js/script.js"></script>
 </body>

@@ -87,10 +87,13 @@ async function loadStorageLocal() {
 
         showToast("File loaded successfully");
     } catch (error) {
-        showToast(`An error occurred while loading the file (${error.name})`);
+        if (error.name !== 'AbortError') {
+            showToast(`An error occurred while loading the file (${error.name})`);
+        } else {
+            showToast('Operation cancelled');
+        }
     }
 }
-
 
 const renderSettingsList = () => {
     const settingsList = document.getElementById('settings-list');
@@ -197,6 +200,7 @@ const editAthletePopup = (index) => {
     // Save the changes
     document.getElementById('edit-athlete-save-btn').addEventListener('click', () => {
         athletes[index] = {
+            id: athletes[index].id,
             firstName: document.getElementById('first-name-edit').value.trim(),
             lastName: document.getElementById('last-name-edit').value.trim(),
             gender: document.getElementById('gender-edit').value.trim(),
@@ -352,24 +356,26 @@ const renderWeighInGroups = (athletesList) => {
 
 };
 
-const renderLeagues = () => {
-    document.querySelectorAll("input[type='checkbox']:checked").forEach((checkbox) => {
-        const athleteId = checkbox.getAttribute('data-athlete-id');
-        const athleteIndex = athletes.findIndex((athlete) => athlete.id === athleteId)
-        athletes[athleteIndex].leagueName = document.getElementById(`league-name-${athleteId}`).value.trim() || 'No League';
-    });
+const renderLeagues = (isResetLeagues = true) => {
+    if (isResetLeagues) {
+        document.querySelectorAll("input[type='checkbox']:checked").forEach((checkbox) => {
+            const athleteId = checkbox.getAttribute('data-athlete-id');
+            const athleteIndex = athletes.findIndex((athlete) => athlete.id === athleteId)
+            athletes[athleteIndex].leagueName = document.getElementById(`league-name-${athleteId}`).value.trim() || 'No League';
+        });
 
-    leagues = [];
+        leagues = [];
 
-    athletes.forEach((entry) => {
-        const groupKey = entry.leagueName;
-        let group = leagues.find((league) => league.groupKey === groupKey);
-        if (!group) {
-            group = { groupKey, athletes: [] };
-            leagues.push(group);
-        }
-        group.athletes.push(entry);
-    });
+        athletes.forEach((entry) => {
+            const groupKey = entry.leagueName;
+            let group = leagues.find((league) => league.groupKey === groupKey);
+            if (!group) {
+                group = {groupKey, athletes: []};
+                leagues.push(group);
+            }
+            group.athletes.push(entry);
+        });
+    }
 
     const leaguesContent = document.getElementById('leagues-view');
     leaguesContent.innerHTML = '';
@@ -436,7 +442,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const createLeaguesButton = document.getElementById('create-leagues-btn');
     const deleteLeaguesButton = document.getElementById('delete-leagues-btn');
     const categoriesTab = document.querySelector("button[data-tab='settings']");
-    const toggleLocal = document.getElementById('local-toggle');
+    const toggleLocalSave = document.getElementById('local-toggle');
+    const toggleLocalLoad = document.getElementById('local-toggle-load');
     const toggleCloud = document.getElementById('cloud-toggle');
 
     // Tab switching logic
@@ -528,11 +535,22 @@ document.addEventListener('DOMContentLoaded', () => {
         renderSettingsList();
     });
 
-    toggleLocal.addEventListener('change', async (event) => {
-        const localOptions = document.getElementById("local-options");
+    toggleLocalSave.addEventListener('change', async (event) => {
         if (event.target.checked) {
             await saveStorageLocal();
-            toggleLocal.click();
+            toggleLocalSave.click();
+        }
+    });
+
+    toggleLocalLoad.addEventListener('change', async (event) => {
+        if (event.target.checked) {
+            await loadStorageLocal();
+            renderSettingsList();
+            renderAthletesList(athletes);
+            renderWeighInGroups(athletes);
+            renderLeagues(false);
+            toggleLocalLoad.click();
+            showToast("Load Local Data Completed");
         }
     });
 
